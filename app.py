@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 app = Flask(__name__)
 
 @app.route('/')
@@ -13,10 +13,12 @@ def board_detail(contents):
 def board_page(page):
     return 'Board page No = %i' %page
 
+# user url_for(access_admin)
 @app.route('/access/admin')
 def access_admin():
     return 'Access Admin'
 
+# user url_for(access_guest)
 @app.route('/access/<guest>')
 def access_guest(guest):
     return 'Access Guest %s' %guest 
@@ -27,6 +29,19 @@ def hello_user(name):
         return redirect(url_for('access_admin'))
     else:
         return redirect(url_for('access_guest', guest = name))
+
+@app.route('/passlogin/<name>')
+def passlogin(name):
+    return "Login Pass %s" %name
+
+@app.route('/login', methods = ['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        user = request.form['nm']
+        return redirect(url_for('passlogin', name = user))
+    else:
+        user = request.args.get('nm')
+        return redirect(url_for('passlogin', name = user))
 
 if __name__ == '__main__':
    app.run(debug = True)
