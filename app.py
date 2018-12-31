@@ -43,5 +43,18 @@ def login():
 def index(user):
     return render_template('index.html', user=user)
 
+@app.route('/score/<int:score>')
+def score_num(score):
+    return render_template('score.html', marks = score)
+
+@app.route('/score/result')
+def route():
+    dict = {'phy':50, 'che':60, 'maths':70}
+    return render_template('result.html', dict = dict)
+
+@app.route('/click')
+def click():
+    return render_template('click.html')
+
 if __name__ == '__main__':
    app.run(debug = True)
