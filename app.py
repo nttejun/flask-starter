@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, render_template, escape, session
+from flask import Flask, redirect, url_for, request, render_template, escape, session, abort
 app = Flask(__name__)
 app.secret_key = 'any random string'
 
@@ -83,6 +83,24 @@ def logout():
    # remove the username from the session if it is there
    session.pop('username', None)
    return redirect(url_for('sessionready'))
+
+@app.route('/redirectindex')
+def redirectindex():
+    return render_template('redirect_index.html')
+
+@app.route('/redirectlogin', methods = ['POST', 'GET'])
+def redirectlogin():
+    if request.method == 'POST':
+        if request.form['username'] == 'admin' :
+            return redirect(url_for('admin_success'))
+        else:
+            abort(500)
+    else:
+       return redirect(url_for('redirectindex'))
+
+@app.route('/redirectsuccees')
+def redirectsuccees():
+    return 'logged in successfully'
 
 if __name__ == '__main__':
    app.run(debug = True)
