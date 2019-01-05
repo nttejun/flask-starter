@@ -21,8 +21,10 @@ print(' ')
 class BoardInheritanceContentsCls(BoardCls):
     def method2(self): return 'boardInheritanceContentsClass1'
 
-print('상속된 메소드 결과 값 리턴')
+print('상속한 클래스의 메소드 결과 값을 리턴')
 bicc = BoardInheritanceContentsCls()
-print('클래스의 메소드 결과 값 리턴')
 print(bicc, bicc.method1())
+
+print('클래스의 메소드 결과 값을 리턴')
+print(bicc, bicc.method2())
 print(' ')
